@@ -1,7 +1,6 @@
 import { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../types';
-import { OptimizedImage } from './OptimizedImage';
 
 interface StoryOverviewProps {
   user: User;
@@ -24,7 +23,7 @@ function StoryOverview({ user, firstStoryId }: StoryOverviewProps): JSX.Element 
       data-testid={`story-circle-${user.id}`}
     >
       <div className="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-yellow-400 to-pink-500">
-        <OptimizedImage
+        <img
           src={user.profilePicture}
           alt={user.username}
           className="w-full h-full object-cover rounded-full border-2 border-white"

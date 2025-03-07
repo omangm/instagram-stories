@@ -2,9 +2,6 @@ import { StoriesData } from '../types';
 
 // This is a mock API service - in a real app, this would fetch from a real API
 export const fetchStories = async (): Promise<StoriesData> => {
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-
   // In a real app, this would be a fetch call to your API
   return {
     "users": [
@@ -30,7 +27,7 @@ export const fetchStories = async (): Promise<StoriesData> => {
       {
         "id": "2",
         "username": "user2",
-        "profilePicture": "https://i.pravatar.cc/150",
+        "profilePicture": "https://i.pravatar.cc/200",
         "stories": [
           {
             "id": "s3",
@@ -40,7 +37,7 @@ export const fetchStories = async (): Promise<StoriesData> => {
           },
           {
             "id": "s12",
-            "imageUrl": "https://picsum.photos/id/104/1080/1920?12",
+            "imageUrl": "https://picsum.photos/id/112/1080/1920?12",
             "username": "user2",
             "timestamp": "2025-02-15T09:30:00Z"
           },
@@ -55,7 +52,7 @@ export const fetchStories = async (): Promise<StoriesData> => {
       {
         "id": "3",
         "username": "user3",
-        "profilePicture": "https://i.pravatar.cc/150",
+        "profilePicture": "https://i.pravatar.cc/250",
         "stories": [
           {
             "id": "s4",

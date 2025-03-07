@@ -215,12 +215,14 @@ function StoryViewer(): JSX.Element {
 
       {/* Story image */}
       <OptimizedImage
+        key={`story-${currentStory.id}`} // forces remount on story change
         src={currentStory.imageUrl}
-        alt={`Story by ${currentUser.username}`}
-        className="w-full h-full object-contain"
+        alt={currentUser.username}
         onLoad={handleImageLoad}
+        className={`transition-opacity duration-300 ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+        width={1080}
+        height={1920}
         priority={true}
-        data-testid="story-image"
       />
     </div>
   );

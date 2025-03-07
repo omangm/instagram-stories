@@ -1,4 +1,4 @@
-import { JSX, useEffect, useState, useRef } from 'react';
+import { JSX, useEffect, useState, useRef } from "react";
 
 interface StoryProgressProps {
   active: boolean;
@@ -6,7 +6,11 @@ interface StoryProgressProps {
   paused?: boolean;
 }
 
-function StoryProgress({ active, completed, paused = false }: StoryProgressProps): JSX.Element {
+function StoryProgress({
+  active,
+  completed,
+  paused = false,
+}: StoryProgressProps): JSX.Element {
   const [progress, setProgress] = useState(completed ? 100 : 0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -27,7 +31,7 @@ function StoryProgress({ active, completed, paused = false }: StoryProgressProps
     if (active && !paused) {
       setProgress(0);
       intervalRef.current = setInterval(() => {
-        setProgress(prev => {
+        setProgress((prev) => {
           if (prev >= 100) {
             if (intervalRef.current) {
               clearInterval(intervalRef.current);
@@ -44,6 +48,7 @@ function StoryProgress({ active, completed, paused = false }: StoryProgressProps
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
+        setProgress(0);
       }
     };
   }, [active, completed, paused]);
@@ -51,7 +56,8 @@ function StoryProgress({ active, completed, paused = false }: StoryProgressProps
   return (
     <div
       className="h-0.5 bg-gray-600 flex-1 rounded-full overflow-hidden"
-      data-testid={`progress-bar-${active ? 'active' : completed ? 'completed' : 'inactive'}`}
+      data-testid={`progress-bar-${active ? "active" : completed ? "completed" : "inactive"
+        }`}
     >
       <div
         className="h-full bg-white rounded-full transition-all duration-100 ease-linear"
