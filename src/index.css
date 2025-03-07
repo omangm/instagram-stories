@@ -1,6 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
 @import "tailwindcss";
 
-
 @theme {
-  --font-sacramento: 'Sacramento', cursive;
+  --font-sacramento: "Sacramento", cursive;
 }

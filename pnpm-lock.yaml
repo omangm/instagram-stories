@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@fontsource/sacramento':
-        specifier: ^5.2.5
-        version: 5.2.5
       '@tailwindcss/vite':
         specifier: ^4.0.11
         version: 4.0.11(vite@6.2.1(@types/node@22.13.9)(jiti@2.4.2)(lightningcss@1.29.2))
@@ -346,9 +343,6 @@ packages:
   '@eslint/plugin-kit@0.2.7':
     resolution: {integrity: sha512-JubJ5B2pJ4k4yGxaNLdbjrnk9d/iDz6/q8wOilpIowd6PJPgaxCuHBnBszq7Ce2TyMrywm5r4PnKm6V3iiZF+g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@fontsource/sacramento@5.2.5':
-    resolution: {integrity: sha512-OCBItyxj9etLveEo9jg7EpSi4iQDooNlHLa5IwZxWoKNR2TyirAwudntD8f/le7q42C7XpAZ+BPxuwe9kz093Q==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2124,8 +2118,6 @@ snapshots:
     dependencies:
       '@eslint/core': 0.12.0
       levn: 0.4.1
-
-  '@fontsource/sacramento@5.2.5': {}
 
   '@humanfs/core@0.19.1': {}
 
