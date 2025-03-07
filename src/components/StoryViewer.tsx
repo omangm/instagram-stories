@@ -167,6 +167,8 @@ function StoryViewer(): JSX.Element {
       onClick={handleScreenClick}
       data-testid="story-viewer-container"
     >
+      <div className="absolute top-0 left-0 right-0 z-[5] py-6 bg-gradient-to-t from-transparent to-black"></div>
+
       {/* Story progress bars */}
       <div className="absolute top-0 left-0 right-0 z-10 p-2">
         <div className="flex space-x-1">

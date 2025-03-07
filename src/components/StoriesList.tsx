@@ -28,8 +28,8 @@ function StoriesList(): JSX.Element {
   }
 
   return (
-    <div className="max-w-screen-md mx-auto p-4">
-      <h1 className="text-2xl font-bold">Instagram</h1>
+    <div className="max-w-screen-md mx-auto">
+      <h1 className="text-3xl font-bold font-sacramento border-b p-2 border-b-slate-400">Instagram</h1>
       <div className="flex space-x-4 overflow-x-auto py-4">
         {users.map(user => (
           <StoryOverview

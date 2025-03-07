@@ -31,7 +31,7 @@ function StoryOverview({ user, firstStoryId }: StoryOverviewProps): JSX.Element 
           height={64}
         />
       </div>
-      <span className="text-xs mt-1">{user.username}</span>
+      <span className="text-xs font-medium mt-1">{user.username}</span>
     </div>
   );
 }
