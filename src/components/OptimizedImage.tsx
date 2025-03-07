@@ -1,6 +1,6 @@
-import { JSX, useState } from 'react';
+import React, { JSX, useState } from 'react';
 
-interface OptimizedImageProps {
+interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
   className?: string;
@@ -15,26 +15,25 @@ export function OptimizedImage({
   className = '',
   width,
   height,
-  priority = false
+  priority = false,
+  onLoad,
+  onError,
+  ...rest
 }: OptimizedImageProps): JSX.Element {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(false);
 
   // Function to add image optimization parameters to URL
   const getOptimizedSrc = (): string => {
-    // Parse URL to check if it's from picsum or pravatar
     try {
       const url = new URL(src);
 
-      // For picsum photos, use their built-in size parameters
       if (url.hostname.includes('picsum.photos')) {
-        // If width and height are provided, use them
         if (width && height) {
           return `${url.origin}/${url.pathname.split('/').slice(0, 3).join('/')}/${width}/${height}${url.search}`;
         }
       }
 
-      // If image URL supports query params for optimization
       if (width) {
         url.searchParams.append('w', width.toString());
       }
@@ -47,8 +46,7 @@ export function OptimizedImage({
 
       return url.toString();
     } catch (e) {
-      console.log(e);
-      // If URL parsing fails, return original
+      console.error(e);
       return src;
     }
   };
@@ -71,13 +69,18 @@ export function OptimizedImage({
         className={`${className} ${!isLoaded ? 'hidden' : ''}`}
         width={width}
         height={height}
-        onLoad={() => setIsLoaded(true)}
-        onError={() => {
+        onLoad={(e) => {
+          setIsLoaded(true);
+          if (onLoad) onLoad(e);
+        }}
+        onError={(e) => {
           setError(true);
           setIsLoaded(true);
+          if (onError) onError(e);
         }}
-        loading={priority ? "eager" : "lazy"}
+        loading={priority ? 'eager' : 'lazy'}
         data-testid="optimized-image"
+        {...rest}
       />
     </>
   );
