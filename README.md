@@ -1,54 +1,144 @@
-# React + TypeScript + Vite
+# Instagram Stories Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is an Instagram Stories clone built with React and TypeScript. It simulates the Instagram stories feature with a focus on performance and user experience.
 
-Currently, two official plugins are available:
+## Deployment
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The application is deployed at [https://instagram-stories-pink.vercel.app/](https://instagram-stories-pink.vercel.app/). Visit this link to access the live application.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- View stories from multiple users
+- Navigate between stories with intuitive tap gestures
+- Automatic progression through stories
+- Visual progress indicators
+- Optimized image loading
+- Loading indicators with fallbacks
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Setup and Running the Application
+
+### Prerequisites
+
+- Node.js and npm (Node Package Manager)
+- Git (optional, for cloning the repository)
+
+### Installation
+
+1. Clone the repository or download the source code:
+
+   ```bash
+   git clone https://github.com/omangm/instagram-stories
+   cd instagram-stories
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   pnpm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   pnpm run dev
+   ```
+
+   This will run the app in development mode. Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
+
+### Running Tests
+
+To run the end-to-end tests with Cypress:
+
+```bash
+pnpm dlx cypress open
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Design Choices and Technical Implementation
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Performance Optimizations
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+#### 1. Image Optimization
+
+The `OptimizedImage` component improves performance in several ways:
+
+- **Lazy loading**: Images load only when needed using the `loading="lazy"` attribute
+- **Priority loading**: Critical images can use `priority="true"` to load eagerly
+- **Placeholder display**: Shows a pulsing gray placeholder while images load
+- **Fallbacks**: Handles loading errors gracefully with placeholder images
+- **Dynamic resizing**: Adds width/height parameters to image URLs for optimal delivery
+- **Efficient reflow**: Maintains layout dimensions during loading to prevent layout shifts
+
+```typescript
+// OptimizedImage component optimizes image loading and handling
+const getOptimizedSrc = (): string => {
+  try {
+    const url = new URL(src);
+    // Add dimension parameters for CDN optimization
+    if (width) url.searchParams.append("w", width.toString());
+    if (height) url.searchParams.append("h", height.toString());
+    return url.toString();
+  } catch (e) {
+    return src;
+  }
+};
 ```
+
+#### 2. Progressive Loading and User Feedback
+
+- **Loading spinners**: Clear loading states with `LoadingSpinner` component
+- **Smooth transitions**: Opacity transitions make loading appear seamless
+- **Progress indicators**: Visual feedback shows story progression with `StoryProgress`
+
+#### 3. Efficient State Management
+
+- Careful state design with specific, granular states (e.g., `isImageLoaded`)
+- Logical separation of concerns into focused components
+- React's built-in hooks for state management without excess libraries
+
+### Scalability Considerations
+
+#### 1. Component Architecture
+
+The application uses a modular component structure:
+
+- **StoryOverview**: Displays user thumbnails in the story feed
+- **StoriesList**: Container for the story thumbnails
+- **StoryViewer**: Main viewing component for individual stories
+- **StoryProgress**: Visual progress tracking component
+- **OptimizedImage**: Reusable optimized image component
+- **LoadingSpinner**: Reusable loading indicator
+
+This separation allows for easier maintenance and extension.
+
+#### 2. Navigation and Routing
+
+The application uses React Router for navigation:
+
+- URL-driven state allows for deep linking, sharing, and browser navigation
+- Routes reflect resource IDs (user ID, story ID) in a RESTful manner
+- History-based navigation maintains expected back/forward functionality
+
+#### 3. Timeout and Memory Management
+
+The application carefully manages resources:
+
+- Proper cleanup of timers and intervals to prevent memory leaks
+- References maintained with `useRef` for efficient cleanup
+- Effect dependencies properly managed to prevent stale closures
+
+#### 5. User Experience Optimizations
+
+- Gesture-based navigation (left/right tapping)
+- Visual feedback for loading and progress
+- Automatic progression with the ability to manually navigate
+- Smooth transitions between stories
+
+## Testing Strategy
+
+The application includes comprehensive end-to-end tests with Cypress that verify:
+
+- Story list display
+- Navigation between stories
+- Loading states
+- Progress indicators
+- Automatic navigation
